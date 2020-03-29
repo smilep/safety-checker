@@ -1,6 +1,7 @@
 import React from "react";
-
 import Form from "react-bootstrap/Form";
+
+import Loader from "./Loader";
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,57 +16,76 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
     fetch(`https://api.covid19api.com/summary`)
       .then(res => res.json())
       .then(result => {
         const countries = result.Countries.map(item => item.Country);
-        this.setState({ data: result, countries: countries, done: true });
+        this.setState({
+          data: result,
+          countries: countries,
+          done: true
+        });
       });
-  }
+  };
 
   handleCountryChange = e => {
+    // TODO - Fetch latest data everytime and remove this hack
+    this.loadData();
     let selectedCountries = this.state.data.Countries.filter(item => {
       return item.Country === e.target.value;
     });
-    this.setState({ selectedCountry: selectedCountries[0] });
+    this.setState({
+      selectedCountry: selectedCountries[0]
+    });
   };
 
   render() {
     let optionItems = [];
     for (var i = 0; i < this.state.countries.length; i++) {
-      optionItems.push(<option>{this.state.countries[i]}</option>);
+      optionItems.push(<option> {this.state.countries[i]} </option>);
     }
     return (
-      <div className='col-md-7'>
-        <h1>{this.state.message}</h1>
-        <Form>
-          <Form.Group controlId="mainForm.SelectCountry">
-            <Form.Label>Select Country</Form.Label>
-            <Form.Control
-              as="select"
-              value={this.state.selectedCountry.Country}
-              onChange={this.handleCountryChange}
-            >
-              {optionItems}
-            </Form.Control>
-          </Form.Group>
-        </Form>
+      <div className="col-md-7">
+        <h1> {this.state.message} </h1>
+        {!this.state.done && <Loader />}
+
+        {/* Main form */}
+        {this.state.done && (
+          <Form>
+            <Form.Group controlId="mainForm.SelectCountry">
+              <Form.Label> Select Country </Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.selectedCountry.Country}
+                onChange={this.handleCountryChange}
+              >
+                {optionItems}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        )}
+
+        {/* Display result */}
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
           this.state.selectedCountry.TotalConfirmed && (
             <div>
-              {this.state.selectedCountry.Country} has total{" "}
-              {this.state.selectedCountry.TotalConfirmed} cases. Please don't go
-              out!
+              {this.state.selectedCountry.Country}
+              has total {this.state.selectedCountry.TotalConfirmed}
+              cases.Please don't go out!
             </div>
           )}
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
           !this.state.selectedCountry.TotalConfirmed && (
             <div>
-              {this.state.selectedCountry.Country} has total{" "}
-              {this.state.selectedCountry.TotalConfirmed} cases. You can go out
-              but follow local authorities messages!
+              {this.state.selectedCountry.Country}
+              has total {this.state.selectedCountry.TotalConfirmed}
+              cases.You can go out but follow local authorities messages!
             </div>
           )}
       </div>

@@ -2,12 +2,14 @@
   "name": "safety-checker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/safety-checker",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.6",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
