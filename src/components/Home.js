@@ -74,18 +74,14 @@ class Home extends React.Component {
           this.state.selectedCountry.Country &&
           this.state.selectedCountry.TotalConfirmed && (
             <div>
-              {this.state.selectedCountry.Country}
-              has total {this.state.selectedCountry.TotalConfirmed}
-              cases.Please don't go out!
+              {this.state.selectedCountry.Country} has total {this.state.selectedCountry.TotalConfirmed} cases. Please don't go out!
             </div>
           )}
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
           !this.state.selectedCountry.TotalConfirmed && (
             <div>
-              {this.state.selectedCountry.Country}
-              has total {this.state.selectedCountry.TotalConfirmed}
-              cases.You can go out but follow local authorities messages!
+              {this.state.selectedCountry.Country} has total {this.state.selectedCountry.TotalConfirmed} cases. You can go out but follow local authorities messages!
             </div>
           )}
       </div>

@@ -1,6 +1,8 @@
 # Safety Checker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- ReactJS - Web app which suggests should you go out of your home based on Covid-19 cases in your country
+
+- Play around with app at https://smilep.github.io/safety-checker/
 
 ## How to run?
 
