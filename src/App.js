@@ -8,8 +8,8 @@ function App() {
       <Home />
       <hr />
       <span className='developer-text'>
-        Developed with ❤️ by Smile. Source code available at{" "}
-        <a href="https://github.com/smilep/safety-checker" target="_blank">
+        Developed with <span role='img' aria-label='heart emoji'>❤️</span> by Smile. Source code available at{" "}
+        <a href="https://github.com/smilep/safety-checker" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
         .
