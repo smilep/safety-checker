@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/smilep/safety-checker.svg?branch=master)](https://travis-ci.org/smilep/safety-checker)
+
 # Safety Checker
 
 - ReactJS - Web app which suggests should you go out of your home based on Covid-19 cases in your country
