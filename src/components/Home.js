@@ -1,5 +1,6 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
+import { Alert, Form, Badge } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 import Loader from "./Loader";
 
@@ -7,40 +8,54 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Should I go out of my home?",
-      selectedCountry: "",
+      message: "Should I go outside of my home?",
       done: false,
+      lastUpdated: "",
       countries: [],
       data: {}
     };
   }
 
   componentDidMount() {
-    this.loadData();
+    this.loadCountriesData();
   }
 
-  loadData = () => {
-    fetch(`https://api.covid19api.com/summary`)
+  loadCountriesData = () => {
+    fetch(`https://api.covid19api.com/countries`)
       .then(res => res.json())
       .then(result => {
-        const countries = result.Countries.map(item => item.Country);
         this.setState({
-          data: result,
-          countries: countries,
+          countries: result,
           done: true
         });
       });
   };
 
-  handleCountryChange = e => {
-    // TODO - Fetch latest data everytime and remove this hack
-    this.loadData();
-    let selectedCountries = this.state.data.Countries.filter(item => {
-      return item.Country === e.target.value;
-    });
+  handleCountryChange = selectedUserCountries => {
+    const userEnteredCountry = selectedUserCountries[0];
     this.setState({
-      selectedCountry: selectedCountries[0]
+      done: false
     });
+    fetch(`https://api.covid19api.com/summary`)
+      .then(res => res.json())
+      .then(result => {
+        this.setState({
+          data: result,
+          lastUpdated: new Date(result.Date).toLocaleTimeString(),
+          done: true
+        });
+      })
+      .then(result => {
+        let selectedCountries = this.state.data.Countries.filter(item => {
+          return item.Slug === userEnteredCountry.Slug;
+        });
+        const selectedCountry = selectedCountries[0];
+        selectedCountry.activeCases =
+          selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered;
+        this.setState({
+          selectedCountry: selectedCountry
+        });
+      });
   };
 
   render() {
@@ -57,14 +72,14 @@ class Home extends React.Component {
         {this.state.done && (
           <Form>
             <Form.Group controlId="mainForm.SelectCountry">
-              <Form.Label> Select Country </Form.Label>
-              <Form.Control
-                as="select"
-                value={this.state.selectedCountry.Country}
+              <Typeahead
+                id="selectCountry"
+                multiple={false}
                 onChange={this.handleCountryChange}
-              >
-                {optionItems}
-              </Form.Control>
+                placeholder="Choose a Country..."
+                options={this.state.countries}
+                labelKey="Country"
+              />
             </Form.Group>
           </Form>
         )}
@@ -72,16 +87,30 @@ class Home extends React.Component {
         {/* Display result */}
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
-          this.state.selectedCountry.TotalConfirmed && (
+          this.state.selectedCountry.activeCases > 0 && (
             <div>
-              {this.state.selectedCountry.Country} has total {this.state.selectedCountry.TotalConfirmed} cases. Please don't go out!
+              <Alert variant="danger">
+                {this.state.selectedCountry.Country} has total{" "}
+                <b>{this.state.selectedCountry.activeCases}</b> active cases.
+                Please don't go out!
+              </Alert>
+              <Badge pill variant="dark">
+                Data last updated at {this.state.lastUpdated}
+              </Badge>
             </div>
           )}
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
-          !this.state.selectedCountry.TotalConfirmed && (
+          this.state.selectedCountry.activeCases < 1 && (
             <div>
-              {this.state.selectedCountry.Country} has total {this.state.selectedCountry.TotalConfirmed} cases. You can go out but follow local authorities messages!
+              <Alert variant="success">
+                {this.state.selectedCountry.Country} has <b>no</b> active cases.
+                You can go out but follow guidelines issued by local
+                authorities.
+              </Alert>
+              <Badge pill variant="dark">
+                Data last updated at {this.state.lastUpdated}
+              </Badge>
             </div>
           )}
       </div>
