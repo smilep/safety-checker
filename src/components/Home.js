@@ -91,7 +91,7 @@ class Home extends React.Component {
             <div>
               <Alert variant="danger">
                 {this.state.selectedCountry.Country} has total{" "}
-                <b>{this.state.selectedCountry.activeCases}</b> active cases.
+                <b>{this.state.selectedCountry.activeCases}</b> active COVID-19 cases.
                 Please don't go out!
               </Alert>
               <Badge pill variant="dark">
@@ -104,7 +104,7 @@ class Home extends React.Component {
           this.state.selectedCountry.activeCases < 1 && (
             <div>
               <Alert variant="success">
-                {this.state.selectedCountry.Country} has <b>no</b> active cases.
+                {this.state.selectedCountry.Country} has <b>no</b> active COVID-19 cases.
                 You can go out but follow guidelines issued by local
                 authorities.
               </Alert>
