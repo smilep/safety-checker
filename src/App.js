@@ -6,15 +6,23 @@ function App() {
   return (
     <div className="container">
       <hr />
-      <Home />
+      <div className="col-md-7">
+        <Home />
+      </div>
       <hr />
-      <span className='developer-text'>
-        Developed by Smile. Source code available at{" "}
-        <a href="https://github.com/smilep/safety-checker" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
-        .
-      </span>
+      <div className="col-md-7">
+        <span className="developer-text">
+          Developed by Smile. Source code available at{" "}
+          <a
+            href="https://github.com/smilep/safety-checker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </span>
+      </div>
     </div>
   );
 }

@@ -64,7 +64,7 @@ class Home extends React.Component {
       optionItems.push(<option> {this.state.countries[i]} </option>);
     }
     return (
-      <div className="col-md-7">
+      <div>
         <h1> {this.state.message} </h1>
         {!this.state.done && <Loader />}
 
