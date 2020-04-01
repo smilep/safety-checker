@@ -39,9 +39,11 @@ class Home extends React.Component {
     fetch(`https://api.covid19api.com/summary`)
       .then(res => res.json())
       .then(result => {
+        const date = new Date(result.Date);
+        const dateStr = date.toDateString() + " " + date.toLocaleTimeString();
         this.setState({
           data: result,
-          lastUpdated: new Date(result.Date).toLocaleTimeString(),
+          lastUpdated: dateStr,
           done: true
         });
       })
@@ -90,9 +92,9 @@ class Home extends React.Component {
           this.state.selectedCountry.activeCases > 0 && (
             <div>
               <Alert variant="danger">
-                {this.state.selectedCountry.Country} has total{" "}
-                <b>{this.state.selectedCountry.activeCases}</b> active COVID-19 cases.
-                Please don't go out!
+                {this.state.selectedCountry.Country} has{" "}
+                <b>{this.state.selectedCountry.activeCases}</b> active COVID-19
+                cases. Please don't go out!
               </Alert>
               <Badge pill variant="dark">
                 Data last updated at {this.state.lastUpdated}
@@ -104,9 +106,9 @@ class Home extends React.Component {
           this.state.selectedCountry.activeCases < 1 && (
             <div>
               <Alert variant="success">
-                {this.state.selectedCountry.Country} has <b>no</b> active COVID-19 cases.
-                You can go out but follow guidelines issued by local
-                authorities.
+                {this.state.selectedCountry.Country} has <b>no</b> active
+                COVID-19 cases. You can go out but follow guidelines issued by
+                local authorities.
               </Alert>
               <Badge pill variant="dark">
                 Data last updated at {this.state.lastUpdated}
