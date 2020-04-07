@@ -24,6 +24,9 @@ class Home extends React.Component {
     fetch(`https://api.covid19api.com/countries`)
       .then(res => res.json())
       .then(result => {
+        result.sort(function(a, b) {
+          return a.Slug.localeCompare(b.Slug);
+        });
         this.setState({
           countries: result,
           done: true

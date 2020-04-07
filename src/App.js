@@ -12,7 +12,7 @@ function App() {
       <hr />
       <div className="col-md-7">
         <span className="developer-text">
-          Developed by Smile. Source code available at{" "}
+          Source code available at{" "}
           <a
             href="https://github.com/smilep/safety-checker"
             target="_blank"
@@ -20,7 +20,6 @@ function App() {
           >
             GitHub
           </a>
-          .
         </span>
       </div>
     </div>
