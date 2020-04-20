@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import { Alert, Form, Badge } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 
@@ -12,53 +13,59 @@ class Home extends React.Component {
       done: false,
       lastUpdated: "",
       countries: [],
-      data: {}
+      data: {},
     };
   }
 
   componentDidMount() {
     this.loadCountriesData();
+    this.initializeReactGA();
+  }
+
+  initializeReactGA() {
+    ReactGA.initialize("UA-164046110-1");
+    ReactGA.pageview("/homepage");
   }
 
   loadCountriesData = () => {
     fetch(`https://api.covid19api.com/countries`)
-      .then(res => res.json())
-      .then(result => {
-        result.sort(function(a, b) {
+      .then((res) => res.json())
+      .then((result) => {
+        result.sort(function (a, b) {
           return a.Slug.localeCompare(b.Slug);
         });
         this.setState({
           countries: result,
-          done: true
+          done: true,
         });
       });
   };
 
-  handleCountryChange = selectedUserCountries => {
+  handleCountryChange = (selectedUserCountries) => {
     const userEnteredCountry = selectedUserCountries[0];
     this.setState({
-      done: false
+      done: false,
     });
     fetch(`https://api.covid19api.com/summary`)
-      .then(res => res.json())
-      .then(result => {
+      .then((res) => res.json())
+      .then((result) => {
         const date = new Date(result.Date);
         const dateStr = date.toDateString() + " " + date.toLocaleTimeString();
         this.setState({
           data: result,
           lastUpdated: dateStr,
-          done: true
+          done: true,
         });
       })
-      .then(result => {
-        let selectedCountries = this.state.data.Countries.filter(item => {
+      .then((result) => {
+        let selectedCountries = this.state.data.Countries.filter((item) => {
           return item.Slug === userEnteredCountry.Slug;
         });
         const selectedCountry = selectedCountries[0];
         selectedCountry.activeCases =
           selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered;
         this.setState({
-          selectedCountry: selectedCountry
+          selectedCountry: selectedCountry,
         });
       });
   };
