@@ -1,15 +1,17 @@
 import React from "react";
 import ReactGA from "react-ga";
-import { Alert, Form, Badge } from "react-bootstrap";
+import { Alert, Form, Badge, Image } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 
 import Loader from "./Loader";
+import no from "../assets/no.gif";
+import maybe from "../assets/maybe.gif";
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Should I go outside of my home?",
+      message: "Should I go outside home?",
       done: false,
       lastUpdated: "",
       countries: [],
@@ -106,6 +108,7 @@ class Home extends React.Component {
                 <b>{this.state.selectedCountry.activeCases}</b> active COVID-19
                 cases. Please don't go out!
               </Alert>
+              <Image src={no} fluid /> <br />
               <Badge pill variant="dark">
                 Data last updated at {this.state.lastUpdated}
               </Badge>
@@ -120,6 +123,7 @@ class Home extends React.Component {
                 COVID-19 cases. You can go out but follow guidelines issued by
                 local authorities.
               </Alert>
+              <Image src={maybe} fluid /> <br />
               <Badge pill variant="dark">
                 Data last updated at {this.state.lastUpdated}
               </Badge>

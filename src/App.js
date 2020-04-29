@@ -12,14 +12,22 @@ function App() {
       <hr />
       <div className="col-md-7">
         <span className="developer-text">
-          Source code available at{" "}
+          This is not an official website. Data sourced from{" "}
+          <a
+            href="https://github.com/CSSEGISandData/COVID-19"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Johns Hopkins CSSE
+          </a>
+          . Source code available at{" "}
           <a
             href="https://github.com/smilep/safety-checker"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
-          </a>
+          </a>.
         </span>
       </div>
     </div>
