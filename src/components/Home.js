@@ -20,7 +20,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.loadCountriesData();
+    this.loadData();
     this.initializeReactGA();
   }
 
@@ -29,7 +29,8 @@ class Home extends React.Component {
     ReactGA.pageview("/homepage");
   }
 
-  loadCountriesData = () => {
+  loadData = () => {
+    // fetch countries
     fetch(`https://api.covid19api.com/countries`)
       .then((res) => res.json())
       .then((result) => {
@@ -38,38 +39,54 @@ class Home extends React.Component {
         });
         this.setState({
           countries: result,
-          done: true,
         });
+      })
+      .then(() => {
+        // fetch stats summary of all countries
+        fetch(`https://api.covid19api.com/summary`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+            return response;
+          })
+          .then((response) => response.json())
+          .then((result) => {
+            this.setState({
+              data: result,
+              done: true,
+            });
+          })
+          .catch((error) => {
+            alert(error);
+          });
       });
   };
 
   handleCountryChange = (selectedUserCountries) => {
     const userEnteredCountry = selectedUserCountries[0];
-    this.setState({
-      done: false,
+    if (!userEnteredCountry) {
+      return;
+    }
+    let selectedCountries = this.state.data.Countries.filter((item) => {
+      if (userEnteredCountry.Slug) {
+        return item.Slug === userEnteredCountry.Slug;
+      }
+      return null;
     });
-    fetch(`https://api.covid19api.com/summary`)
-      .then((res) => res.json())
-      .then((result) => {
-        const date = new Date(result.Date);
-        const dateStr = date.toDateString() + " " + date.toLocaleTimeString();
-        this.setState({
-          data: result,
-          lastUpdated: dateStr,
-          done: true,
-        });
-      })
-      .then((result) => {
-        let selectedCountries = this.state.data.Countries.filter((item) => {
-          return item.Slug === userEnteredCountry.Slug;
-        });
-        const selectedCountry = selectedCountries[0];
-        selectedCountry.activeCases =
-          selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered;
-        this.setState({
-          selectedCountry: selectedCountry,
-        });
+    const selectedCountry = selectedCountries[0];
+    if (selectedCountry) {
+      selectedCountry.activeCases =
+        selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered;
+      const date = new Date(selectedCountry.Date);
+      const dateStr = date.toDateString() + " " + date.toLocaleTimeString();
+      this.setState({
+        selectedCountry: selectedCountry,
+        lastUpdated: dateStr,
       });
+    } else {
+      alert("Data not found for " + userEnteredCountry.Country);
+    }
   };
 
   render() {
