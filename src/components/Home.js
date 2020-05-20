@@ -31,7 +31,7 @@ class Home extends React.Component {
 
   loadData = () => {
     // fetch countries
-    fetch(`https://api.covid19api.com/countries`)
+    fetch(process.env.REACT_APP_COUNTRIES_API)
       .then((res) => res.json())
       .then((result) => {
         result.sort(function (a, b) {
@@ -43,7 +43,7 @@ class Home extends React.Component {
       })
       .then(() => {
         // fetch stats summary of all countries
-        fetch(`https://api.covid19api.com/summary`)
+        fetch(process.env.REACT_APP_SUMMARY_API)
           .then((response) => {
             if (!response.ok) {
               throw new Error(response.statusText);
