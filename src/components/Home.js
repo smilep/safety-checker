@@ -17,6 +17,7 @@ class Home extends React.Component {
       countries: [],
       data: {},
     };
+    this.ref = React.createRef();
   }
 
   componentDidMount() {
@@ -87,6 +88,8 @@ class Home extends React.Component {
     } else {
       alert("Data not found for " + userEnteredCountry.Country);
     }
+    this.ref.current.clear();
+    this.ref.current.blur();
   };
 
   render() {
@@ -110,6 +113,7 @@ class Home extends React.Component {
                 placeholder="Choose a Country..."
                 options={this.state.countries}
                 labelKey="Country"
+                ref={this.ref}
               />
             </Form.Group>
           </Form>
