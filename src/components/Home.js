@@ -75,7 +75,7 @@ class Home extends React.Component {
       }
       return null;
     });
-    const selectedCountry = selectedCountries[0];
+    let selectedCountry = selectedCountries[0];
     if (selectedCountry) {
       selectedCountry.activeCases =
         selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered;
@@ -86,7 +86,14 @@ class Home extends React.Component {
         lastUpdated: dateStr,
       });
     } else {
-      alert("Data not found for " + userEnteredCountry.Country);
+      selectedCountry = {
+        activeCases: null,
+        Country: userEnteredCountry.Country,
+      };
+      this.setState({
+        selectedCountry: selectedCountry,
+        lastUpdated: null,
+      });
     }
     this.ref.current.clear();
     this.ref.current.blur();
@@ -135,8 +142,10 @@ class Home extends React.Component {
               </Badge>
             </div>
           )}
+
         {this.state.selectedCountry &&
           this.state.selectedCountry.Country &&
+          this.state.selectedCountry.activeCases != null &&
           this.state.selectedCountry.activeCases < 1 && (
             <div>
               <Alert variant="success">
@@ -148,6 +157,19 @@ class Home extends React.Component {
               <Badge pill variant="dark">
                 Data last updated at {this.state.lastUpdated}
               </Badge>
+            </div>
+          )}
+
+        {this.state.selectedCountry &&
+          this.state.selectedCountry.Country &&
+          !this.state.selectedCountry.activeCases && (
+            <div>
+              <Alert variant="success">
+                COVID-19 data is not available for{" "}
+                {this.state.selectedCountry.Country}. Please check with local
+                authorities.
+              </Alert>
+              <Image src={maybe} fluid /> <br />
             </div>
           )}
       </div>
