@@ -11,7 +11,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Should I go outside home?",
+      message: "Should I stop taking COVID-19 precautions?",
       done: false,
       lastUpdated: "",
       countries: [],
