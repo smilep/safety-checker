@@ -2,7 +2,7 @@
 
 # Safety Checker
 
-- ReactJS - Web app which suggests should you go out of your home based on Covid-19 cases in your country
+- ReactJS - Web app which suggests should you stop taking COVID-19 precautions based on active COVID-19 cases in the selected country
 
 - Play around with app at https://smilep.github.io/safety-checker/
 
