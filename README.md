@@ -2,9 +2,11 @@
 
 # Safety Checker
 
-- ReactJS - Web app which suggests should you stop taking COVID-19 precautions based on active COVID-19 cases in the selected country
+- Web app which suggests should you stop taking COVID-19 precautions based on active COVID-19 cases in the selected country
 
 - Play around with app at https://smilep.github.io/safety-checker/
+
+- Built using ReactJS
 
 ## How to run?
 
