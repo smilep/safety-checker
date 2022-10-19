@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/smilep/safety-checker.svg?branch=master)](https://travis-ci.org/smilep/safety-checker)
+[![CI](https://github.com/smilep/safety-checker/actions/workflows/main.yml/badge.svg)](https://github.com/smilep/safety-checker/actions/workflows/main.yml)
 
 # Safety Checker
 
