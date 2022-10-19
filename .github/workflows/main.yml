@@ -21,7 +21,7 @@ jobs:
     
     - name: set remote git url
       run: |
-        sudo git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/smilep/twitter-play-ui.git
+        sudo git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/smilep/safety-checker.git
     
     - name: install
       run: |
