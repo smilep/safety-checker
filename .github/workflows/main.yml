@@ -18,9 +18,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    
+    - name: set remote git url
+      run: |
+        sudo git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/smilep/twitter-play-ui.git
 
     - name: deploy to github pages
       run: |
         sudo npm install
-        sudo npm run build
         sudo npm run deploy
