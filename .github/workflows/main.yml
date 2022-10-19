@@ -19,11 +19,8 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: install  gh-pages
-      run: sudo npm install -g gh-pages
-
     - name: deploy to github pages
       run: |
         sudo npm install
         sudo npm run build
-        sudo gh-pages --dir build --branch=gh-pages --repo=https://${{ secrets.GITHUB_TOKEN }}@github.com/smilep/safety-checker.git --no-silent
+        sudo npm run deploy
