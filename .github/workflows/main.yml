@@ -22,8 +22,11 @@ jobs:
     - name: set remote git url
       run: |
         sudo git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/smilep/twitter-play-ui.git
+    
+    - name: install
+      run: |
+        sudo npm install
 
     - name: deploy to github pages
       run: |
-        sudo npm install
         sudo npm run deploy
