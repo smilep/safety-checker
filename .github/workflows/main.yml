@@ -27,10 +27,6 @@ jobs:
       run: |
         sudo npm install
 
-    - name: react-scripts build
-      run: |
-        sudo react-scripts build
-
     - name: deploy to GitHub pages
       run: |
-        sudo gh-pages -d build
+        sudo npm run deploy
