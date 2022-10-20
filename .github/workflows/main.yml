@@ -19,9 +19,11 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     
-    - name: set remote git url
+    - name: set git config
       run: |
         sudo git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/smilep/safety-checker.git
+        sudo git config --local user.email "action@github.com"
+        sudo git config --local user.name "GitHub Action"
     
     - name: install
       run: |
